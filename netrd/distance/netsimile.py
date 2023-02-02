@@ -15,7 +15,7 @@ import numpy as np
 from scipy.spatial.distance import canberra
 from scipy.stats import skew, kurtosis
 
-from .base import BaseDistance
+import base
 
 #from ..utilities import undirected, unweighted
 
@@ -118,7 +118,7 @@ def get_bond_features(bond,
 
     return np.array(bond_feature_vector)
 
-class NetSimile(BaseDistance):
+class NetSimile(base.BaseDistance):
     """Compares node signature distributions."""
 
     #@undirected
@@ -285,6 +285,9 @@ def graph_signature(node_features):
 
 def AtomFeatures(smi1):
     rdkitmol = Chem.MolFromSmiles(smi1)
+    if rdkitmol is None:
+        print(smi1)
+        return np.nan
     n_nodes = rdkitmol.GetNumAtoms()
     #n_edges = 2*rdkitmol.GetNumBonds()
     unrelated_smiles = "O=O"
@@ -295,7 +298,25 @@ def AtomFeatures(smi1):
     for atom in rdkitmol.GetAtoms():
         X[atom.GetIdx(), :] = get_atom_features(atom)
     return X
-# sample usage
-
-
-
+# # sample usage
+# #def GraphComparison(pred_smi: str, true_smi: str, DensityArray: np.ndarray, true_DensityArray: np.ndarray) -> float:
+# from pysmiles import read_smiles
+# smi1 = 'NC1CCN(S(=O)(=O)c2ccc3[nH]c(=O)oc32)C1'
+# smi2 = 'NC1CCN(S(=O)(=O)c2ccc3[nH]c(=O)oc3c2)C1'
+# mol = read_smiles(smi1)
+# mol1 = read_smiles(smi2)
+#
+# AF1 = AtomFeatures(smi1)
+# AF2 = AtomFeatures(smi2)
+# DensityArray = np.array([10, 10, 11, 11, 10, 10, 17, 18, 12, 10, 10, 10, 10, 10, 10, 10, 10, 10])
+# true_DensityArray = np.array([10, 10, 11, 11, 10, 10, 17, 18, 12, 10, 10, 10, 10, 10, 10, 10, 10, 10,11])
+# G1, G1_SD = mol, DensityArray
+# G2, G2_SD = mol1, true_DensityArray
+#
+# test = NetSimile()
+# distance = test.dist(G1, G1_SD, AF1, G2, G2_SD, AF2)
+#
+#
+#
+#
+# print('ENDE')
