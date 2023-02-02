@@ -15,7 +15,7 @@ import numpy as np
 from scipy.spatial.distance import canberra
 from scipy.stats import skew, kurtosis
 
-import base
+import .base import BaseDistance
 
 #from ..utilities import undirected, unweighted
 
@@ -118,7 +118,7 @@ def get_bond_features(bond,
 
     return np.array(bond_feature_vector)
 
-class NetSimile(base.BaseDistance):
+class NetSimile(BaseDistance):
     """Compares node signature distributions."""
 
     #@undirected
