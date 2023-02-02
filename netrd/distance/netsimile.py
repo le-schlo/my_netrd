@@ -15,7 +15,7 @@ import numpy as np
 from scipy.spatial.distance import canberra
 from scipy.stats import skew, kurtosis
 
-import .base import BaseDistance
+from .base import BaseDistance
 
 #from ..utilities import undirected, unweighted
 
